@@ -1,6 +1,7 @@
 package com.s8.build;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.FileVisitOption;
@@ -19,7 +20,7 @@ public class S8CommandLauncher {
 
 	public final String JAVA_home;
 
-	private Path path;
+	public final Path path;
 
 	private int maxDepth = MAX_DEPTHD_DEFAULT;
 
@@ -42,11 +43,10 @@ public class S8CommandLauncher {
 		this.maxDepth = depth;
 	}
 
-
-	public void setCmdPathname(String pathname) {
-		this.path = Paths.get(pathname);
+	
+	public File getFile(String pathanme) {
+		return path.resolve(pathanme).toFile();
 	}
-
 
 
 	/**

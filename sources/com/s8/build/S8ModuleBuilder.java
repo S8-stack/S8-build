@@ -1,8 +1,16 @@
 package com.s8.build;
 
 import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.nio.charset.StandardCharsets;
+
+import com.s8.core.io.joos.JOOS_Lexicon;
+import com.s8.core.io.joos.parsing.JOOS_ParsingException;
+import com.s8.core.io.joos.types.JOOS_CompilingException;
+import com.s8.core.io.joos.utilities.JOOS_BufferedFileReader;
 
 public class S8ModuleBuilder extends S8CommandLauncher {
+
 
 	public final static String ROOT_BUILD_DIR = "forge";
 
@@ -22,16 +30,45 @@ public class S8ModuleBuilder extends S8CommandLauncher {
 	 * @param JAVA_home
 	 * @param cmdPathname
 	 */
-	public S8ModuleBuilder(String JAVA_home, 
-			String moduleName,
-			String repositoryPathname,
-			String[] dependencies,
-			String jarName) {
-		super(JAVA_home, repositoryPathname);
-		
+	public S8ModuleBuilder(String JAVA_home, String repositoryPathname) {
+		super(JAVA_home, repositoryPathname);		
+	}
+	
+	
+	
+	public void setConfig(String moduleName, String[] dependencies, String jarName) {
 		this.dependencies = dependencies;
 		this.moduleName = moduleName;
 		this.jarName = jarName;
+	}
+
+
+	public void loadConfig() throws IOException, JOOS_CompilingException {
+
+		
+		JOOS_Lexicon context = JOOS_Lexicon.from(S8BuildConfigurationFile.class);
+
+		RandomAccessFile file = new RandomAccessFile(getFile("build.js"), "r");
+
+		S8BuildConfigurationFile config = null;
+
+		try {
+			JOOS_BufferedFileReader reader = new JOOS_BufferedFileReader(file.getChannel(), StandardCharsets.UTF_8, 64);
+
+			config = (S8BuildConfigurationFile) context.parse(reader, true);
+			reader.close();
+		}
+		catch (JOOS_ParsingException e) {
+			e.printStackTrace();
+		}
+		finally {
+			file.close();
+		}
+
+		System.out.println("\nConfig file loaded");
+		
+		/* set config */
+		setConfig(config.moduleName, config.dependencies, config.jarName);
 	}
 
 
@@ -106,8 +143,6 @@ public class S8ModuleBuilder extends S8CommandLauncher {
 
 
 	}
-
-
 
 
 }

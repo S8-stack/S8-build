@@ -20,7 +20,8 @@ public class Build_s8_core_io_bytes {
 			
 		String jar = stack + "/s8-core-io-bytes.jar";
 		
-		S8ModuleBuilder moduleBuilder = new S8ModuleBuilder(JAVA_HOME, module, repo, dependencies, jar);
+		S8ModuleBuilder moduleBuilder = new S8ModuleBuilder(JAVA_HOME, repo);
+		moduleBuilder.setConfig(module, dependencies, jar);
 		moduleBuilder.build();
 		
 		
