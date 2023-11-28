@@ -3,6 +3,8 @@ package com.s8.build;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import com.s8.core.io.joos.JOOS_Lexicon;
 import com.s8.core.io.joos.parsing.JOOS_ParsingException;
@@ -19,27 +21,42 @@ public class S8ModuleBuilder extends S8CommandLauncher {
 	public final static String CLASSES_PATH = "forge/classes";
 
 
+	public final static String JAR_EXTENSION = ".jar";
+	
 
-	private String[] dependencies;
+	private String dependencies;
 
 	private String jarName;
 
 	private String moduleName;
+	
+	private Path stackPath;
+	
 	/**
+	 * 
 	 * 
 	 * @param JAVA_home
 	 * @param cmdPathname
 	 */
-	public S8ModuleBuilder(String JAVA_home, String repositoryPathname) {
-		super(JAVA_home, repositoryPathname);		
+	public S8ModuleBuilder(String JAVA_home, String repositoryPathname, String stackPathname) {
+		super(JAVA_home, repositoryPathname);
+		this.stackPath = Paths.get(stackPathname);
 	}
 	
 	
 	
 	public void setConfig(String moduleName, String[] dependencies, String jarName) {
-		this.dependencies = dependencies;
+		StringBuilder dependenciesCmdBuilder = new StringBuilder();
+		int n = dependencies.length;
+		for(int i = 0; i<n; i++) {
+			String dependency = stackPath.resolve(dependencies[i] + JAR_EXTENSION).toString();
+			dependenciesCmdBuilder.append(dependency);
+			if(i < n-1) { dependenciesCmdBuilder.append(":"); }
+		}
+		this.dependencies = dependenciesCmdBuilder.toString();
+		
 		this.moduleName = moduleName;
-		this.jarName = jarName;
+		this.jarName = stackPath.resolve(jarName + JAR_EXTENSION).toString();
 	}
 
 
@@ -68,19 +85,9 @@ public class S8ModuleBuilder extends S8CommandLauncher {
 		System.out.println("\nConfig file loaded");
 		
 		/* set config */
-		setConfig(config.moduleName, config.dependencies, config.jarName);
+		setConfig(config.moduleName, config.dependencies, config.targetName);
 	}
 
-
-	private String buildDependenciesPath() {
-		StringBuilder dependenciesCmdBuilder = new StringBuilder();
-		int n = dependencies.length;
-		for(int i = 0; i<n; i++) {
-			dependenciesCmdBuilder.append(dependencies[i]);
-			if(i < n-1) { dependenciesCmdBuilder.append(":"); }
-		}
-		return dependenciesCmdBuilder.toString();
-	}
 
 
 	/**
@@ -114,8 +121,7 @@ public class S8ModuleBuilder extends S8CommandLauncher {
 
 		run(JAVA_home + "/bin/javac",
 				//path.toFile().getPath(), /* , dir="${basedir}"> */
-				"--module-path",
-				buildDependenciesPath(), //"${dependencies}" />
+				"--module-path", dependencies, //"${dependencies}" />
 				"-d", CLASSES_PATH,
 				"--module-source-path", SOURCES_PATH,
 				"--module", moduleName);
@@ -140,6 +146,8 @@ public class S8ModuleBuilder extends S8CommandLauncher {
 				"-C", 
 				"forge/classes/"+moduleName,
 				".");
+		
+		System.out.println("---- Module: "+moduleName+" is now compiled -----\n\n");
 
 
 	}

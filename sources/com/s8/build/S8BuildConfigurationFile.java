@@ -9,8 +9,8 @@ public class S8BuildConfigurationFile {
 	@JOOS_Field(name="module")
 	public String moduleName;
 
-	@JOOS_Field(name="jar")
-	public String jarName;
+	@JOOS_Field(name="target")
+	public String targetName;
 
 	@JOOS_Field(name="dependencies")
 	public String[] dependencies;
