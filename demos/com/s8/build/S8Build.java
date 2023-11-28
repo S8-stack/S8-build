@@ -13,7 +13,7 @@ public class S8Build {
 		
 
 		//String repo = args[0];
-		String repo = "/Users/pc/qx/git/s8-core-io-bytes";
+		String repo = "/Users/pc/qx/git/s8-core-io-joos";
 		
 		S8ModuleBuilder moduleBuilder = new S8ModuleBuilder(JAVA_HOME, repo);
 		moduleBuilder.loadConfig();

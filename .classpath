@@ -3,7 +3,7 @@
 	<classpathentry kind="src" path="sources"/>
 	<classpathentry kind="src" path="demos"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="src" path="/com.s8.core.io.joos">
+	<classpathentry kind="src" path="/s8-core-io-joos">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
