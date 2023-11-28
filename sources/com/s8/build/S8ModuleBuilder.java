@@ -59,7 +59,9 @@ public class S8ModuleBuilder extends S8CommandLauncher {
 
 		copyAll("sources", "forge/java/" + moduleName);
 
-		copyAll("demos", "forge/java/" + moduleName);
+		if(isPresent("demos")) {
+			copyAll("demos", "forge/java/" + moduleName);			
+		}
 
 
 		/**

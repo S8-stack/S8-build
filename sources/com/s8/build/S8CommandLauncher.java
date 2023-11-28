@@ -80,6 +80,14 @@ public class S8CommandLauncher {
 	}
 
 
+	/**
+	 * 
+	 * @param pathname
+	 * @return
+	 */
+	public boolean isPresent(String pathname) {
+		return Files.exists(path.resolve(pathname));
+	}
 
 
 	public void copyAll(String originPathname, String targetPathname) throws IOException {
