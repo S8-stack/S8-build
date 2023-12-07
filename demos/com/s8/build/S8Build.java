@@ -2,12 +2,12 @@ package com.s8.build;
 
 import java.io.IOException;
 
-import com.s8.core.io.joos.types.JOOS_CompilingException;
+import com.s8.core.io.json.types.JSON_CompilingException;
 
 public class S8Build {
 	
 
-	public static void main(String[] args) throws IOException, S8CmdException, JOOS_CompilingException {
+	public static void main(String[] args) throws IOException, S8CmdException, JSON_CompilingException {
 		
 
 		//String repo = args[0];

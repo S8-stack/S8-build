@@ -6,10 +6,10 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import com.s8.core.io.joos.JOOS_Lexicon;
-import com.s8.core.io.joos.parsing.JOOS_ParsingException;
-import com.s8.core.io.joos.types.JOOS_CompilingException;
-import com.s8.core.io.joos.utilities.JOOS_BufferedFileReader;
+import com.s8.core.io.json.JSON_Lexicon;
+import com.s8.core.io.json.parsing.JSON_ParsingException;
+import com.s8.core.io.json.types.JSON_CompilingException;
+import com.s8.core.io.json.utilities.JOOS_BufferedFileReader;
 
 public class S8ModuleBuilder extends S8CommandLauncher {
 
@@ -60,10 +60,10 @@ public class S8ModuleBuilder extends S8CommandLauncher {
 	}
 
 
-	public void loadConfig() throws IOException, JOOS_CompilingException {
+	public void loadConfig() throws IOException, JSON_CompilingException {
 
 		
-		JOOS_Lexicon context = JOOS_Lexicon.from(S8BuildConfigurationFile.class);
+		JSON_Lexicon context = JSON_Lexicon.from(S8BuildConfigurationFile.class);
 
 		RandomAccessFile file = new RandomAccessFile(getFile("build.js"), "r");
 
@@ -75,7 +75,7 @@ public class S8ModuleBuilder extends S8CommandLauncher {
 			config = (S8BuildConfigurationFile) context.parse(reader, true);
 			reader.close();
 		}
-		catch (JOOS_ParsingException e) {
+		catch (JSON_ParsingException e) {
 			e.printStackTrace();
 		}
 		finally {
