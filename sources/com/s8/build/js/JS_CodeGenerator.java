@@ -1,6 +1,6 @@
 package com.s8.build.js;
 
-public class JS_Generator {
+public class JS_CodeGenerator {
 	
 	
 	private final StringBuilder builder;
@@ -13,7 +13,7 @@ public class JS_Generator {
 	
 	
 
-	public JS_Generator() {
+	public JS_CodeGenerator() {
 		super();
 		this.builder = new StringBuilder();
 	}
@@ -43,7 +43,7 @@ public class JS_Generator {
 	 * 
 	 * @param comment
 	 */
-	public void appendCodeCommentLine(String comment) {
+	public void appendCommentLine(String comment) {
 		builder.append(indentPrefix);
 		builder.append("/* ");
 		builder.append(comment);
