@@ -6,9 +6,20 @@ import com.s8.build.S8CmdException;
 import com.s8.build.S8ModuleBuilder;
 import com.s8.core.io.json.types.JSON_CompilingException;
 
+
+/**
+ * 
+ */
 public class S8Build {
 	
 
+	/**
+	 * 
+	 * @param args
+	 * @throws IOException
+	 * @throws S8CmdException
+	 * @throws JSON_CompilingException
+	 */
 	public static void main(String[] args) throws IOException, S8CmdException, JSON_CompilingException {
 		
 
