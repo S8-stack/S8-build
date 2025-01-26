@@ -1,7 +1,7 @@
 /**
  * 
  */
-module com.s8.build {
+open module com.s8.build {
 	
 	exports com.s8.build.cmds;
 	exports com.s8.build.js;

@@ -1,9 +1,14 @@
 package com.s8.build.cmds;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
+import com.s8.build.S8BuildConfigurationFile;
+import com.s8.build.S8BuildException;
 import com.s8.build.S8CmdException;
 import com.s8.build.S8ModuleBuilder;
+import com.s8.core.io.json.JSON_Lexicon;
 import com.s8.core.io.json.types.JSON_CompilingException;
 
 
@@ -19,8 +24,9 @@ public class S8Build {
 	 * @throws IOException
 	 * @throws S8CmdException
 	 * @throws JSON_CompilingException
+	 * @throws S8BuildException 
 	 */
-	public static void main(String[] args) throws IOException, S8CmdException, JSON_CompilingException {
+	public static void main(String[] args) throws IOException, S8CmdException, JSON_CompilingException, S8BuildException {
 		
 
 		//String repo = args[0];
@@ -29,45 +35,24 @@ public class S8Build {
 		
 		String root = "/Users/pc/qx/git";
 		
-		String[] repositories = new String[] { 
-				root + "/S8-api",
-				
-				/* I/O */
-				root + "/S8-core-io-JSON",
-				root + "/S8-core-io-xml",
-				root + "/S8-core-io-csv",
-				root + "/S8-core-io-bytes",
-				
-				/* BOHR */
-				root + "/S8-core-bohr-atom",
-				root + "/S8-core-bohr-beryllium",
-				root + "/S8-core-bohr-lithium",
-				root + "/S8-core-bohr-neodymium",
-				root + "/S8-core-bohr-neon",
-				
-				/* ARCH */
-				root + "/S8-core-arch-silicon",
-				root + "/S8-core-arch-titanium",
-				
-				/* WEB */
-				root + "/S8-core-web-helium",
-				root + "/S8-core-web-carbon",
-				root + "/S8-core-web-xenon",
-				
-				
-				};
+		String[] repositories = S8CoreList.listRepositories(root);
 		
-		String stack = "/Users/pc/qx/git/com.s8.stack/modules";
+		Path stackPath = Paths.get("/Users/pc/qx/git/S8-build/builds/v4/core");
 		
 	
-		
-		for(String repo : repositories) {
-			
-			S8ModuleBuilder moduleBuilder = new S8ModuleBuilder(JAVA_home, repo, stack);
-			moduleBuilder.loadConfig();
-			moduleBuilder.build();
+		JSON_Lexicon context;
+		try {
+			context = JSON_Lexicon.from(S8BuildConfigurationFile.class);
+		} catch (JSON_CompilingException e) {
+			e.printStackTrace();
+			throw new S8BuildException("Failed to build S8BuildConfigurationFile context");
 		}
 		
+		for(String repoPathname : repositories) {
+			Path repoPath = Paths.get(repoPathname);
+			S8ModuleBuilder moduleBuilder = new S8ModuleBuilder(JAVA_home, repoPath, stackPath);
+			moduleBuilder.build(context);
+		}
 	}
 	
 	

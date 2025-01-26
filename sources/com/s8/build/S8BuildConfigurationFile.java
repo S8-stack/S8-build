@@ -15,5 +15,4 @@ public class S8BuildConfigurationFile {
 	@JSON_Field(name="dependencies")
 	public String[] dependencies;
 
-
 }
