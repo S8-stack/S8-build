@@ -44,8 +44,6 @@ public class S8ModuleBuilder {
 
 	private final Path repoPath;
 	
-	private final Path stackPath;
-
 	private final Path stackModulesPath;
 
 	private final Path stackWebSourcesPath;
@@ -62,7 +60,6 @@ public class S8ModuleBuilder {
 		this.JAVA_home = JAVA_home;
 		this.repoPath = repositoryPath;
 		
-		this.stackPath = stackPath;
 		this.stackModulesPath = stackPath.resolve(STACK_MODULES_PATHNAME);
 		this.stackWebSourcesPath = stackPath.resolve(STACK_WEBSOURCES_PATHNAME);
 		

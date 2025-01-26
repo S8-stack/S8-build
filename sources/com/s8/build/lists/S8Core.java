@@ -1,6 +1,6 @@
-package com.s8.build.cmds;
+package com.s8.build.lists;
 
-public class S8CoreList {
+public class S8Core {
 	
 	
 	public static String[] listRepositories(String root) {

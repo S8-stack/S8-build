@@ -1,13 +1,10 @@
-package com.s8.build.cmds;
+package com.s8.build;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import com.s8.build.S8BuildConfigurationFile;
-import com.s8.build.S8BuildException;
-import com.s8.build.S8CmdException;
-import com.s8.build.S8ModuleBuilder;
+import com.s8.build.lists.S8Core;
 import com.s8.core.io.json.JSON_Lexicon;
 import com.s8.core.io.json.types.JSON_CompilingException;
 
@@ -20,24 +17,22 @@ public class S8Build {
 
 	/**
 	 * 
-	 * @param args
+	 * @param JAVA_home
+	 * @param root
+	 * @param stack
+	 * 
 	 * @throws IOException
 	 * @throws S8CmdException
 	 * @throws JSON_CompilingException
-	 * @throws S8BuildException 
+	 * @throws S8BuildException
 	 */
-	public static void main(String[] args) throws IOException, S8CmdException, JSON_CompilingException, S8BuildException {
-		
-
-		//String repo = args[0];
-		String JAVA_home = "/Library/Java/JavaVirtualMachines/jdk-19.jdk/Contents/Home";
+	public static void launch(String JAVA_home, String root, String stack) 
+			throws IOException, S8CmdException, JSON_CompilingException, S8BuildException {
 		
 		
-		String root = "/Users/pc/qx/git";
+		String[] repositories = S8Core.listRepositories(root);
 		
-		String[] repositories = S8CoreList.listRepositories(root);
-		
-		Path stackPath = Paths.get("/Users/pc/qx/git/S8-build/builds/v4/core");
+		Path stackPath = Paths.get(stack);
 		
 	
 		JSON_Lexicon context;
