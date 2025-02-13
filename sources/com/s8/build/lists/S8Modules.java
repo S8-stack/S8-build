@@ -1,12 +1,14 @@
 package com.s8.build.lists;
 
-public class S8Core {
+public class S8Modules {
 	
 	
 	public static String[] listRepositories(String root) {
 	
 	
 	return new String[] { 
+			
+			/* <core> */
 			
 			/* API */
 			root + "/S8-api",
@@ -38,6 +40,29 @@ public class S8Core {
 			root + "/S8-core-web-carbon",
 			root + "/S8-core-web-manganese",
 			root + "/S8-core-web-xenon",
+			
+			/* BUILD */
+			root + "/S8-build",
+			
+			/* </core> */
+			
+			
+			
+			/* <pkgs> */
+			root + "/S8-pkgs-ui-carbide",
+			root + "/S8-pkgs-charts",
+			root + "/S8-pkgs-io-HTML",
+			root + "/S8-pkgs-io-SVG",
+			root + "/S8-pkgs-io-WebGL",
+			root + "/S8-pkgs-people",
+			root + "/S8-pkgs-ui-paper",
+			/* </pkgs> */
+			
+			/* <fwks> */
+			root + "/S8-fwks-palm",
+			/* </fwks> */
+			
+			
 				
 		};
 	
